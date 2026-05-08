@@ -1,0 +1,53 @@
+import { Footer } from "../components/Footer";
+import { TopNavBar } from "../components/TopNavBar";
+import { getAllCategories, searchProducts } from "../lib/api-client";
+import { CategoryExperience } from "./CategoryExperience";
+
+export const dynamic = "force-dynamic";
+
+export default async function CategoryPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ query?: string; collection?: string }>;
+}) {
+  const params = await searchParams;
+  const [apiCategories, initialPage] = await Promise.all([
+    getAllCategories().catch(() => []),
+    searchProducts({
+      page: 0,
+      size: 12,
+      term: params.query,
+    }).catch(() => null),
+  ]);
+
+  return (
+    <main className="min-h-screen bg-[#f9f9f9] text-[#121212]">
+      <TopNavBar />
+      <section className="px-5 py-16 lg:px-8 lg:py-24">
+        <div className="mx-auto max-w-7xl">
+          <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#8f741f]">
+            Search and categories
+          </p>
+          <div className="mt-5 grid gap-8 border-b border-black/10 pb-10 lg:grid-cols-[1fr_0.8fr] lg:items-end">
+            <h1 className="font-serif text-5xl leading-none tracking-[-0.04em] sm:text-7xl">
+              The curated index.
+            </h1>
+            <p className="max-w-xl text-lg leading-8 text-[#5c574e]">
+              Filter the luxury edit by collection, brand, price, and rating.
+              Each recommendation is built to move cleanly from editorial
+              discovery to Amazon purchase.
+            </p>
+          </div>
+          <div className="mt-10">
+            <CategoryExperience
+              apiCategories={apiCategories}
+              initialPage={initialPage}
+              initialQuery={params.query}
+            />
+          </div>
+        </div>
+      </section>
+      <Footer />
+    </main>
+  );
+}

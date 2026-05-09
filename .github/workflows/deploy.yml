@@ -40,6 +40,5 @@ jobs:
           script: |
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
             cd ~/app
-            docker compose rm -sf frontend
             docker compose pull frontend
-            docker compose up -d --force-recreate frontend
+            docker compose up -d frontend

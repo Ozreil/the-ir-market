@@ -16,7 +16,10 @@ const categoryImages: Record<string, string> = {
 
 export function productDtoToDisplayProduct(product: ProductDto): Product {
   const categoryTitle = product.category?.title ?? "Curated";
-  const image = imageForCategory(categoryTitle);
+  const apiImages = product.product_images
+    ?.map((image) => image.url)
+    .filter(Boolean);
+  const image = apiImages?.[0] ?? imageForCategory(categoryTitle);
   const affiliateLink = product.affiliate_link || product.product_link || "#";
 
   return {
@@ -29,11 +32,14 @@ export function productDtoToDisplayProduct(product: ProductDto): Product {
     msrp: Math.ceil(product.price * 1.18),
     rating: Number(product.rating ?? 0),
     image,
-    gallery: [
-      image,
-      "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=82",
-      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=900&q=82",
-    ],
+    gallery:
+      apiImages && apiImages.length > 0
+        ? apiImages
+        : [
+            image,
+            "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=82",
+            "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=900&q=82",
+          ],
     material: product.category?.description ?? "Curated marketplace selection",
     summary: product.description || "Selected from the live Their Markets API.",
     curatorTake:

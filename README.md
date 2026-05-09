@@ -14,7 +14,13 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://local.theirmarkets.com:3000](http://local.theirmarkets.com:3000) with your browser to see the result.
+
+For local development, make sure your machine resolves the local domain:
+
+```txt
+127.0.0.1 local.theirmarkets.com
+```
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 

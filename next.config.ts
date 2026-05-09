@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["local.theirmarkets.com"],
   images: {
     remotePatterns: [
       {
@@ -10,6 +11,15 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "m.media-amazon.com",
+      },
+      {
+        protocol: "https",
+        hostname: "theirmarkets.com",
+      },
+      {
+        protocol: "http",
+        hostname: "local.theirmarkets.com",
+        port: "9090",
       },
     ],
   },

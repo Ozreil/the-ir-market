@@ -20,6 +20,7 @@ export default async function CategoryPage({
     }).catch(() => null),
   ]);
 
+
   return (
     <main className="min-h-screen bg-[#f9f9f9] text-[#121212]">
       <TopNavBar />

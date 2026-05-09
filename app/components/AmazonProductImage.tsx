@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { getAmazonProductData } from "./amazon-product-data";
 
 type AmazonProductImageProps = {
   asin?: string;
@@ -10,12 +11,6 @@ type AmazonProductImageProps = {
   fallbackSrc: string;
   priority?: boolean;
   sizes: string;
-};
-
-type AmazonImageResponse = {
-  primaryImage?: {
-    URL?: string;
-  };
 };
 
 export function AmazonProductImage({
@@ -33,28 +28,23 @@ export function AmazonProductImage({
       return;
     }
 
-    const controller = new AbortController();
+    let isActive = true;
 
-    fetch(`/api/amazon/product-image?asin=${encodeURIComponent(asin)}`, {
-      signal: controller.signal,
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return null;
-        }
-
-        return response.json() as Promise<AmazonImageResponse>;
-      })
+    getAmazonProductData(asin)
       .then((data) => {
-        if (data?.primaryImage?.URL) {
+        if (isActive && data?.primaryImage?.URL) {
           setSrc(data.primaryImage.URL);
         }
       })
       .catch(() => {
-        setSrc(fallbackSrc);
+        if (isActive) {
+          setSrc(fallbackSrc);
+        }
       });
 
-    return () => controller.abort();
+    return () => {
+      isActive = false;
+    };
   }, [asin, fallbackSrc]);
 
   return (

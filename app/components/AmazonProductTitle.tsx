@@ -1,15 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { getAmazonProductData } from "./amazon-product-data";
 
 type AmazonProductTitleProps = {
   asin?: string;
   fallbackTitle: string;
   className?: string;
-};
-
-type AmazonTitleResponse = {
-  title?: string;
 };
 
 export function AmazonProductTitle({
@@ -24,28 +21,23 @@ export function AmazonProductTitle({
       return;
     }
 
-    const controller = new AbortController();
+    let isActive = true;
 
-    fetch(`/api/amazon/product-image?asin=${encodeURIComponent(asin)}`, {
-      signal: controller.signal,
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return null;
-        }
-
-        return response.json() as Promise<AmazonTitleResponse>;
-      })
+    getAmazonProductData(asin)
       .then((data) => {
-        if (data?.title) {
+        if (isActive && data?.title) {
           setTitle(data.title);
         }
       })
       .catch(() => {
-        setTitle(fallbackTitle);
+        if (isActive) {
+          setTitle(fallbackTitle);
+        }
       });
 
-    return () => controller.abort();
+    return () => {
+      isActive = false;
+    };
   }, [asin, fallbackTitle]);
 
   return <>{className ? <span className={className}>{title}</span> : title}</>;

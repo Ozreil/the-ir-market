@@ -54,6 +54,12 @@ export type ProductDto = {
   number_of_reviews: number;
   info_date: string;
   price: number;
+  product_images?: ProductImageDto[];
+};
+
+export type ProductImageDto = {
+  id: number;
+  url: string;
 };
 
 export type PageProductDto = {
@@ -85,7 +91,7 @@ export type ProductsQuery = {
 };
 
 export const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL ?? "https://theirmarkets.com",
+  baseURL: getApiBaseUrl(),
   headers: {
     Accept: "application/json",
   },
@@ -104,19 +110,42 @@ export async function searchProducts(
   searchRequest: ProductSearchRequest,
   config?: AxiosRequestConfig,
 ) {
-  const response = await apiClient.get<PageProductDto>("/api/search", {
-    ...config,
-    params: compactParams(searchRequest),
-  });
+  const endpoint = isBrowser() ? "/api/products/search" : "/search";
 
-  return response.data;
+  try {
+    const response = await apiClient.post<PageProductDto>(
+      endpoint,
+      compactParams(searchRequest),
+      config,
+    );
+
+    if (process.env.NODE_ENV === "development") {
+      console.log("[searchProducts] success", {
+        request: compactParams(searchRequest),
+        result: response.data,
+      });
+    }
+
+    return response.data;
+  } catch (error) {
+    if (process.env.NODE_ENV === "development") {
+      console.error("[searchProducts] failed", {
+        request: compactParams(searchRequest),
+        status: axios.isAxiosError(error) ? error.response?.status : undefined,
+        message: error instanceof Error ? error.message : String(error),
+      });
+    }
+
+    throw error;
+  }
 }
 
 export async function getProductsByCompanyAndCategory(
   query: ProductsQuery,
   config?: AxiosRequestConfig,
 ) {
-  const response = await apiClient.get<PageProductDto>("/api/products", {
+  const endpoint = isBrowser() ? "/api/products" : "/products";
+  const response = await apiClient.get<PageProductDto>(endpoint, {
     ...config,
     params: compactParams(query),
   });
@@ -129,7 +158,7 @@ export async function getProductById(
   config?: AxiosRequestConfig,
 ) {
   const response = await apiClient.get<ProductDto>(
-    `/api/products/${id}`,
+    `/products/${id}`,
     config,
   );
 
@@ -141,7 +170,7 @@ export async function getProductWithNeighbors(
   config?: AxiosRequestConfig,
 ) {
   const response = await apiClient.get<ProductWithNeighborsDto>(
-    `/api/products/${id}/neighbors`,
+    `/products/${id}/neighbors`,
     config,
   );
 
@@ -149,13 +178,13 @@ export async function getProductWithNeighbors(
 }
 
 export async function getAllCompanies(config?: AxiosRequestConfig) {
-  const response = await apiClient.get<CompanyDto[]>("/api/companies", config);
+  const response = await apiClient.get<CompanyDto[]>("/companies", config);
 
   return response.data;
 }
 
 export async function getAllCategories(config?: AxiosRequestConfig) {
-  const response = await apiClient.get<CategoryDto[]>("/api/categories", config);
+  const response = await apiClient.get<CategoryDto[]>("/categories", config);
 
   return response.data;
 }
@@ -170,4 +199,20 @@ function compactParams<T extends Record<string, unknown>>(params: T) {
       return !Array.isArray(value) || value.length > 0;
     }),
   );
+}
+
+function getApiBaseUrl() {
+  if (isBrowser()) {
+    return "";
+  }
+
+  return (
+    process.env.API_BASE_URL ??
+    process.env.NEXT_PUBLIC_API_BASE_URL ??
+    "http://local.theirmarkets.com:9090"
+  );
+}
+
+function isBrowser() {
+  return typeof window !== "undefined";
 }

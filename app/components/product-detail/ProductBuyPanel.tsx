@@ -1,4 +1,5 @@
 import { AmazonProductTitle } from "../AmazonProductTitle";
+import { RatingStars } from "../RatingStars";
 import { amazonLinkAttributes } from "../../data/affiliate";
 import type { Product } from "../../lib/product-display";
 
@@ -26,9 +27,7 @@ export function ProductBuyPanel({ product }: { product: Product }) {
           <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#7c735f]">
             Rating
           </p>
-          <p className="mt-2 text-4xl font-light text-[#7c735f]">
-            {product.rating}
-          </p>
+          <RatingStars rating={product.rating} className="mt-3 text-3xl" />
         </div>
       </div>
 

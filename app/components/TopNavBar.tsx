@@ -18,7 +18,7 @@ export async function TopNavBar({
           : "border-black/10 bg-[#f9f9f9]/86 text-[#121212]"
       }`}
     >
-      <nav className="mx-auto max-w-7xl px-4 py-3 sm:px-5 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:items-center lg:gap-4 lg:px-8 lg:py-4">
+      <nav className="mx-auto grid max-w-7xl gap-3 px-4 py-3 sm:px-5 lg:grid-cols-[auto_minmax(520px,1fr)_auto] lg:items-center lg:gap-5 lg:px-8 lg:py-4">
         <div className="flex items-center justify-between gap-4">
           <Link
             href="/"
@@ -63,12 +63,12 @@ export async function TopNavBar({
                   Selected
                 </Link>
                 <Link href="/#registry" className="transition hover:text-gold">
-                  Registry
+                  Updates
                 </Link>
               </div>
               <form action="/category" className="mt-4 grid gap-3">
                 <label className="sr-only" htmlFor="mobile-site-search">
-                  Search luxury products
+                  Search products
                 </label>
                 <input
                   id="mobile-site-search"
@@ -109,33 +109,21 @@ export async function TopNavBar({
           </details>
         </div>
 
-        <div className="hidden items-center gap-6 text-xs font-semibold uppercase tracking-[0.22em] text-current/70 lg:flex">
-          <Link href="/category" className="transition hover:text-gold">
-            Collections
-          </Link>
-          <Link href="/#selected" className="transition hover:text-gold">
-            Selected
-          </Link>
-          <Link href="/#registry" className="transition hover:text-gold">
-            Registry
-          </Link>
-        </div>
-
         <form
           action="/category"
-          className="hidden gap-2 lg:grid lg:grid-cols-[minmax(180px,1fr)_150px_auto] lg:justify-self-end"
+          className="grid grid-cols-[minmax(0,1fr)_auto] gap-2 sm:grid-cols-[minmax(0,1fr)_160px_auto] lg:grid-cols-[minmax(360px,1fr)_170px_auto]"
         >
           <label className="sr-only" htmlFor="site-search">
-            Search luxury products
+            Search products
           </label>
           <input
             id="site-search"
             name="query"
             type="search"
-            placeholder="Search the edit"
-            className={`h-10 min-w-0 border px-4 text-sm outline-none transition focus:border-gold ${
+            placeholder="Search products, categories, and trusted picks"
+            className={`h-12 min-w-0 border px-5 text-base outline-none transition focus:border-gold ${
               isDark
-                ? "border-white/15 bg-white/8 text-white placeholder:text-white/42"
+                ? "border-white/18 bg-white/10 text-white placeholder:text-white/46"
                 : "border-black/12 bg-white text-[#121212] placeholder:text-[#121212]/42"
             }`}
           />
@@ -145,7 +133,7 @@ export async function TopNavBar({
           <select
             id="site-category"
             name="collection"
-            className={`h-10 border px-3 text-sm outline-none transition focus:border-gold ${
+            className={`hidden h-12 border px-3 text-sm outline-none transition focus:border-gold sm:block ${
               isDark
                 ? "border-white/15 bg-[#121212] text-white"
                 : "border-black/12 bg-white text-[#121212]"
@@ -159,7 +147,7 @@ export async function TopNavBar({
               </option>
             ))}
           </select>
-          <button className="h-10 bg-gold px-5 text-xs font-bold uppercase tracking-[0.2em] text-[#121212] transition hover:bg-[#121212] hover:text-white">
+          <button className="h-12 bg-gold px-6 text-xs font-bold uppercase tracking-[0.2em] text-[#121212] transition hover:bg-white">
             Search
           </button>
         </form>

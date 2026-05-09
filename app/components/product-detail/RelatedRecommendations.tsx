@@ -17,7 +17,7 @@ export function RelatedRecommendations({ products }: { products: Product[] }) {
         </div>
         <div className="grid auto-cols-[minmax(280px,1fr)] grid-flow-col gap-6 overflow-x-auto pb-4">
           {products.map((item) => (
-            <div key={item.id} className="w-[320px]">
+            <div key={item.id}>
               <ProductCard product={item} />
             </div>
           ))}

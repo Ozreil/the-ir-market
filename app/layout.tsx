@@ -1,6 +1,16 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Noto_Serif } from "next/font/google";
+import { JsonLd } from "./components/JsonLd";
 import "./globals.css";
+import {
+  absoluteUrl,
+  defaultDescription,
+  homeTitle,
+  organizationJsonLd,
+  siteName,
+  siteUrl,
+  websiteJsonLd,
+} from "./lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,9 +29,69 @@ const notoSerif = Noto_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Their Market Luxury | Premium Amazon Affiliate Curation",
-  description:
-    "A premium Amazon affiliate platform curating high-end electronics, home objects, kitchen rituals, and luxury-conscious gifts.",
+  metadataBase: new URL(siteUrl),
+  applicationName: siteName,
+  title: {
+    default: homeTitle,
+    template: `%s | ${siteName}`,
+  },
+  description: defaultDescription,
+  alternates: {
+    canonical: "/",
+  },
+  appleWebApp: {
+    capable: true,
+    title: siteName,
+  },
+  category: "shopping",
+  keywords: [
+    "Amazon affiliate",
+    "affiliate shopping market",
+    "Amazon product recommendations",
+    "curated products",
+    "trusted product picks",
+    "premium shopping",
+    "home and kitchen",
+    "electronics",
+    "gift guide",
+  ],
+  openGraph: {
+    description: defaultDescription,
+    images: [
+      {
+        alt: "Their Markets luxury logo",
+        height: 1024,
+        url: absoluteUrl("/full-logo.jpeg"),
+        width: 1536,
+      },
+    ],
+    locale: "en_US",
+    siteName,
+    title: homeTitle,
+    type: "website",
+    url: siteUrl,
+  },
+  robots: {
+    follow: true,
+    googleBot: {
+      follow: true,
+      index: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+    index: true,
+  },
+  twitter: {
+    card: "summary_large_image",
+    description: defaultDescription,
+    images: [absoluteUrl("/full-logo.jpeg")],
+    title: homeTitle,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#121212",
 };
 
 export default function RootLayout({
@@ -35,7 +105,11 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       className={`${geistSans.variable} ${geistMono.variable} ${notoSerif.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <JsonLd data={organizationJsonLd()} />
+        <JsonLd data={websiteJsonLd()} />
+        {children}
+      </body>
     </html>
   );
 }

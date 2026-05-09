@@ -12,15 +12,15 @@ export function FeaturedCollections({
         <div className="grid gap-10 lg:grid-cols-[0.72fr_1fr] lg:items-end">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#8f741f]">
-              Featured collections
+              Browse by category
             </p>
-            <h2 className="mt-4 font-serif text-5xl leading-none tracking-[-0.04em] sm:text-7xl">
-              The best version of the everyday.
+            <h2 className="mt-4 font-serif text-5xl leading-none sm:text-7xl">
+              A market built for quick trust.
             </h2>
           </div>
           <p className="max-w-2xl text-lg font-light leading-8 text-[#5c574e]">
-            Browse categories shaped like an editorial wardrobe: precise,
-            useful, and calm enough to make comparison feel intentional.
+            Each collection keeps comparison simple: clear categories, direct
+            affiliate links, and products chosen for everyday usefulness.
           </p>
         </div>
 
@@ -51,11 +51,19 @@ export function FeaturedCollections({
           </div>
         ) : (
           <div className="mt-12 border border-black/10 bg-white px-6 py-14 text-center">
-            <h3 className="font-serif text-3xl">No API categories available.</h3>
+            <h3 className="font-serif text-3xl">
+              The full market is being prepared.
+            </h3>
             <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[#666056]">
-              Start the category API or adjust the API base URL to populate
-              collections.
+              You can still enter the main catalog and search the newest
+              affiliate product picks.
             </p>
+            <Link
+              href="/category"
+              className="mt-7 inline-flex min-h-11 items-center justify-center bg-[#121212] px-6 text-xs font-bold uppercase tracking-[0.2em] text-white transition hover:bg-gold hover:text-[#121212]"
+            >
+              Browse products
+            </Link>
           </div>
         )}
       </div>

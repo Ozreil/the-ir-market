@@ -48,17 +48,14 @@ export function AmazonProductImage({
   }, [asin, fallbackSrc]);
 
   return (
-    // <Image
-    //   src={src}
-    //   alt={alt}
-    //   fill
-    //   priority={priority}
-    //   sizes={sizes}
-    //   className={className}
-    // />
-    <img
-       src={src}
+    <Image
+      src={src}
       alt={alt}
-     />
+      fill
+      priority={priority}
+      sizes={sizes}
+      className={className}
+      unoptimized
+    />
   );
 }

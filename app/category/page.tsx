@@ -1,9 +1,42 @@
+import type { Metadata } from "next";
 import { Footer } from "../components/Footer";
 import { TopNavBar } from "../components/TopNavBar";
 import { getAllCategories, searchProducts } from "../lib/api-client";
+import { absoluteUrl, defaultDescription, siteName } from "../lib/seo";
 import { CategoryExperience } from "./CategoryExperience";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Curated Product Index",
+  description:
+    "Search and filter premium Amazon affiliate products by category, price, brand, rating, and reviews.",
+  alternates: {
+    canonical: "/category",
+  },
+  openGraph: {
+    description:
+      "Search and filter premium Amazon affiliate products by category, price, brand, rating, and reviews.",
+    images: [
+      {
+        alt: "Their Markets product index",
+        height: 1024,
+        url: absoluteUrl("/full-logo.jpeg"),
+        width: 1536,
+      },
+    ],
+    siteName,
+    title: "Curated Product Index",
+    type: "website",
+    url: absoluteUrl("/category"),
+  },
+  twitter: {
+    card: "summary_large_image",
+    description: defaultDescription,
+    images: [absoluteUrl("/full-logo.jpeg")],
+    title: "Curated Product Index",
+  },
+};
 
 export default async function CategoryPage({
   searchParams,

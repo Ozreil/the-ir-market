@@ -1,4 +1,5 @@
 import { Footer } from "./components/Footer";
+import { JsonLd } from "./components/JsonLd";
 import { TopNavBar } from "./components/TopNavBar";
 import { BrandValues } from "./components/home/BrandValues";
 import { FeaturedCollections } from "./components/home/FeaturedCollections";
@@ -7,6 +8,7 @@ import { RegistryCta } from "./components/home/RegistryCta";
 import { SelectedProducts } from "./components/home/SelectedProducts";
 import { getAllCategories, searchProducts } from "./lib/api-client";
 import { productDtoToDisplayProduct } from "./lib/product-display";
+import { homePageJsonLd } from "./lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -29,12 +31,13 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-[#f9f9f9] text-[#121212]">
+      <JsonLd data={homePageJsonLd()} />
       <TopNavBar variant="dark" />
       <HomeHero />
       <FeaturedCollections categories={categories} />
-      <SelectedProducts products={selectedProducts} />
+      {/* <SelectedProducts products={selectedProducts} />
       <BrandValues />
-      <RegistryCta />
+      <RegistryCta /> */}
       <Footer />
     </main>
   );

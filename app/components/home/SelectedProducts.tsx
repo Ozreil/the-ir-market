@@ -9,10 +9,10 @@ export function SelectedProducts({ products }: { products: Product[] }) {
         <div className="mb-10 flex flex-col justify-between gap-6 border-b border-black/10 pb-8 md:flex-row md:items-end">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#8f741f]">
-              Curated excellence
+              Popular affiliate picks
             </p>
-            <h2 className="mt-4 font-serif text-5xl tracking-[-0.04em]">
-              Selected for you.
+            <h2 className="mt-4 font-serif text-5xl">
+              Start with what people already compare.
             </h2>
           </div>
           <Link
@@ -31,11 +31,19 @@ export function SelectedProducts({ products }: { products: Product[] }) {
           </div>
         ) : (
           <div className="border border-black/10 px-6 py-14 text-center">
-            <h3 className="font-serif text-3xl">No API products available.</h3>
+            <h3 className="font-serif text-3xl">
+              Product picks are loading soon.
+            </h3>
             <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[#666056]">
-              Start the product API or adjust the API base URL to populate this
-              section.
+              The homepage will show the most reviewed products once the
+              product feed is available.
             </p>
+            <Link
+              href="/category"
+              className="mt-7 inline-flex min-h-11 items-center justify-center bg-[#121212] px-6 text-xs font-bold uppercase tracking-[0.2em] text-white transition hover:bg-gold hover:text-[#121212]"
+            >
+              Open catalog
+            </Link>
           </div>
         )}
       </div>

@@ -30,9 +30,7 @@ type CategoryFiltersProps = {
 export function CategoryFilters({
   apiCategories,
   categoryId,
-  companyId,
   onCategoryChange,
-  onCompanyChange,
   onPriceChange,
   onQueryChange,
   onSortDirectionChange,
@@ -73,7 +71,7 @@ export function CategoryFilters({
           }))}
         />
 
-        <div>
+        {/* <div>
           <label
             htmlFor="company-id"
             className="text-xs font-bold uppercase tracking-[0.22em] text-[#7c735f]"
@@ -94,7 +92,7 @@ export function CategoryFilters({
             When company and category are set, this page uses the dedicated
             company/category endpoint.
           </p>
-        </div>
+        </div> */}
 
         <FilterSelect
           label="Sort by"

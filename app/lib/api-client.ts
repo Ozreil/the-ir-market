@@ -110,7 +110,7 @@ export async function searchProducts(
   searchRequest: ProductSearchRequest,
   config?: AxiosRequestConfig,
 ) {
-  const endpoint = "/api/search";
+  const endpoint = "/search";
 
   try {
     const response = await apiClient.post<PageProductDto>(
@@ -147,7 +147,7 @@ export async function getProductsByCompanyAndCategory(
   query: ProductsQuery,
   config?: AxiosRequestConfig,
 ) {
-  const endpoint = isBrowser() ? "/api/products" : "/products";
+  const endpoint = "/products";
   const response = await apiClient.get<PageProductDto>(endpoint, {
     ...config,
     params: compactParams(query),
@@ -156,28 +156,39 @@ export async function getProductsByCompanyAndCategory(
   return response.data;
 }
 
-export async function getProductById(
-  id: number,
-  config?: AxiosRequestConfig,
-) {
-  const response = await apiClient.get<ProductDto>(
-    `/products/${id}`,
-    config,
-  );
+export async function getProductById(id: number, config?: AxiosRequestConfig) {
+
+  try{
+ const response = await apiClient.get<ProductDto>(`/products/${id}`, config);
 
   return response.data;
+  } catch(error) {
+      console.log("[product by Id error]", 
+        JSON.stringify(error)
+      )
+  }
 }
 
 export async function getProductWithNeighbors(
   id: number,
   config?: AxiosRequestConfig,
 ) {
-  const response = await apiClient.get<ProductWithNeighborsDto>(
-    `/products/${id}/neighbors`,
-    config,
-  );
+  try {
+    const response = await apiClient.get<ProductWithNeighborsDto>(
+      `/products/${id}/neighbors`,
+      config,
+    );
+    return response.data;
+  } catch (error) {
+    if (process.env.NODE_ENV === "development") {
+      console.error("[get products] failed", {
+        status: axios.isAxiosError(error) ? error.response?.status : undefined,
+        message: JSON.stringify(error),
+      });
+    }
 
-  return response.data;
+    throw error;
+  }
 }
 
 export async function getAllCompanies(config?: AxiosRequestConfig) {
@@ -206,15 +217,13 @@ function compactParams<T extends Record<string, unknown>>(params: T) {
 
 function getApiBaseUrl() {
   if (isBrowser()) {
-    return "https://theirmarkets.com";
+    return "https://theirmarkets.com/api";
   }
 
-  return (
-    "https://theirmarkets.com"
-    // process.env.API_BASE_URL ??
-    // process.env.NEXT_PUBLIC_API_BASE_URL ??
-    // "https://theirmarkets.com"
-  );
+  return "https://theirmarkets.com/api";
+  // process.env.API_BASE_URL ??
+  // process.env.NEXT_PUBLIC_API_BASE_URL ??
+  // "https://theirmarkets.com"
 }
 
 function isBrowser() {

@@ -1,8 +1,8 @@
 "use client";
 
 import { ProductCard } from "../../components/ProductCard";
-import type { Product } from "../../data/catalog";
 import type { PageProductDto } from "../../lib/api-client";
+import type { Product } from "../../lib/product-display";
 
 type ProductResultsProps = {
   apiError: string | null;

@@ -1,4 +1,4 @@
-import type { Product } from "../../data/catalog";
+import type { Product } from "../../lib/product-display";
 
 export function CuratorTake({ product }: { product: Product }) {
   return (
@@ -13,7 +13,7 @@ export function CuratorTake({ product }: { product: Product }) {
           </h2>
         </div>
         <blockquote className="border-l border-gold pl-8 font-serif text-3xl leading-[1.35] tracking-[-0.03em] text-[#2a2722]">
-          {product.curatorTake}
+          {product.curatorTake || product.summary}
           <footer className="mt-7 font-sans text-xs font-bold uppercase tracking-[0.24em] text-[#7c735f]">
             The Curator / Their Market Luxury
           </footer>

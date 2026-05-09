@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ProductCard } from "../ProductCard";
-import type { Product } from "../../data/catalog";
+import type { Product } from "../../lib/product-display";
 
 export function SelectedProducts({ products }: { products: Product[] }) {
   return (
@@ -23,11 +23,21 @@ export function SelectedProducts({ products }: { products: Product[] }) {
           </Link>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        {products.length > 0 ? (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        ) : (
+          <div className="border border-black/10 px-6 py-14 text-center">
+            <h3 className="font-serif text-3xl">No API products available.</h3>
+            <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[#666056]">
+              Start the product API or adjust the API base URL to populate this
+              section.
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

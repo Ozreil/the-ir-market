@@ -1,5 +1,5 @@
 import { ProductCard } from "../ProductCard";
-import type { Product } from "../../data/catalog";
+import type { Product } from "../../lib/product-display";
 
 export function RelatedRecommendations({ products }: { products: Product[] }) {
   return (

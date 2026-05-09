@@ -1,9 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import { collections } from "../data/catalog";
+import { getAllCategories } from "../lib/api-client";
 
-export function TopNavBar({ variant = "light" }: { variant?: "light" | "dark" }) {
+export async function TopNavBar({
+  variant = "light",
+}: {
+  variant?: "light" | "dark";
+}) {
   const isDark = variant === "dark";
+  const categories = await getAllCategories().catch(() => []);
 
   return (
     <header
@@ -90,9 +95,9 @@ export function TopNavBar({ variant = "light" }: { variant?: "light" | "dark" })
                   defaultValue=""
                 >
                   <option value="">All collections</option>
-                  {collections.map((collection) => (
-                    <option key={collection.slug} value={collection.slug}>
-                      {collection.name}
+                  {categories.map((category) => (
+                    <option key={category.id} value={slugify(category.title)}>
+                      {category.title}
                     </option>
                   ))}
                 </select>
@@ -148,9 +153,9 @@ export function TopNavBar({ variant = "light" }: { variant?: "light" | "dark" })
             defaultValue=""
           >
             <option value="">All</option>
-            {collections.map((collection) => (
-              <option key={collection.slug} value={collection.slug}>
-                {collection.name}
+            {categories.map((category) => (
+              <option key={category.id} value={slugify(category.title)}>
+                {category.title}
               </option>
             ))}
           </select>
@@ -161,4 +166,12 @@ export function TopNavBar({ variant = "light" }: { variant?: "light" | "dark" })
       </nav>
     </header>
   );
+}
+
+function slugify(value: string) {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }

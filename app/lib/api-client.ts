@@ -110,7 +110,7 @@ export async function searchProducts(
   searchRequest: ProductSearchRequest,
   config?: AxiosRequestConfig,
 ) {
-  const endpoint = isBrowser() ? "/api/products/search" : "/search";
+  const endpoint = "/api/search";
 
   try {
     const response = await apiClient.post<PageProductDto>(
@@ -121,6 +121,7 @@ export async function searchProducts(
 
     if (process.env.NODE_ENV === "development") {
       console.log("[searchProducts] success", {
+        endpoint: endpoint,
         request: compactParams(searchRequest),
         result: response.data,
       });
@@ -130,9 +131,11 @@ export async function searchProducts(
   } catch (error) {
     if (process.env.NODE_ENV === "development") {
       console.error("[searchProducts] failed", {
+        endpoint: endpoint,
+        body: compactParams(searchRequest),
         request: compactParams(searchRequest),
         status: axios.isAxiosError(error) ? error.response?.status : undefined,
-        message: error instanceof Error ? error.message : String(error),
+        message: JSON.stringify(error),
       });
     }
 
@@ -203,13 +206,14 @@ function compactParams<T extends Record<string, unknown>>(params: T) {
 
 function getApiBaseUrl() {
   if (isBrowser()) {
-    return "";
+    return "https://theirmarkets.com";
   }
 
   return (
-    process.env.API_BASE_URL ??
-    process.env.NEXT_PUBLIC_API_BASE_URL ??
-    "http://local.theirmarkets.com:9090"
+    "https://theirmarkets.com"
+    // process.env.API_BASE_URL ??
+    // process.env.NEXT_PUBLIC_API_BASE_URL ??
+    // "https://theirmarkets.com"
   );
 }
 

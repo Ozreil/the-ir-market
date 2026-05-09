@@ -11,15 +11,18 @@ export default async function CategoryPage({
   searchParams: Promise<{ query?: string; collection?: string }>;
 }) {
   const params = await searchParams;
-  const [apiCategories, initialPage] = await Promise.all([
-    getAllCategories().catch(() => []),
-    searchProducts({
-      page: 0,
-      size: 12,
-      term: params.query,
-    }).catch(() => null),
-  ]);
-
+  const apiCategories = await getAllCategories().catch(() => []);
+  const initialCategory = params.collection
+    ? apiCategories.find(
+        (category) => slugify(category.title) === params.collection,
+      )
+    : undefined;
+  const initialPage = await searchProducts({
+    categories: initialCategory ? [initialCategory.id] : undefined,
+    page: 0,
+    size: 12,
+    term: params.query,
+  }).catch(() => null);
 
   return (
     <main className="min-h-screen bg-[#f9f9f9] text-[#121212]">
@@ -42,6 +45,9 @@ export default async function CategoryPage({
           <div className="mt-10">
             <CategoryExperience
               apiCategories={apiCategories}
+              initialCategoryId={
+                initialCategory ? String(initialCategory.id) : undefined
+              }
               initialPage={initialPage}
               initialQuery={params.query}
             />
@@ -51,4 +57,12 @@ export default async function CategoryPage({
       <Footer />
     </main>
   );
+}
+
+function slugify(value: string) {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }

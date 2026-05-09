@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CategoryFilters } from "./_components/CategoryFilters";
 import { ProductResults } from "./_components/ProductResults";
-import { products as fallbackProducts } from "../data/catalog";
 import {
   getProductsByCompanyAndCategory,
   searchProducts,
@@ -16,6 +15,7 @@ import { productDtoToDisplayProduct } from "../lib/product-display";
 
 type CategoryExperienceProps = {
   apiCategories: CategoryDto[];
+  initialCategoryId?: string;
   initialQuery?: string;
   initialPage?: PageProductDto | null;
 };
@@ -35,11 +35,12 @@ const sortOptions: Array<{ label: string; value: SortValue }> = [
 
 export function CategoryExperience({
   apiCategories,
+  initialCategoryId = "",
   initialQuery = "",
   initialPage,
 }: CategoryExperienceProps) {
   const [query, setQuery] = useState(initialQuery);
-  const [categoryId, setCategoryId] = useState("");
+  const [categoryId, setCategoryId] = useState(initialCategoryId);
   const [companyId, setCompanyId] = useState("");
   const [priceIndex, setPriceIndex] = useState(0);
   const [sortValue, setSortValue] = useState<SortValue>("RATING");
@@ -57,7 +58,7 @@ export function CategoryExperience({
       return apiPage.content.map(productDtoToDisplayProduct);
     }
 
-    return fallbackProducts;
+    return [];
   }, [apiPage]);
 
   const fetchProducts = useCallback(async () => {
@@ -91,7 +92,7 @@ export function CategoryExperience({
       setApiPage(page);
     } catch {
       setApiError(
-        "Live product API is unavailable. Showing curated fallback products.",
+        "Live product API is unavailable. No local fallback products are being used.",
       );
       setApiPage(null);
     } finally {

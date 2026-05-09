@@ -1,6 +1,6 @@
 import { AmazonProductTitle } from "../AmazonProductTitle";
 import { amazonLinkAttributes } from "../../data/affiliate";
-import type { Product } from "../../data/catalog";
+import type { Product } from "../../lib/product-display";
 
 export function ProductBuyPanel({ product }: { product: Product }) {
   return (
@@ -24,10 +24,10 @@ export function ProductBuyPanel({ product }: { product: Product }) {
         </div>
         <div className="border-l border-black/10 py-5 pl-6">
           <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#7c735f]">
-            MSRP
+            Rating
           </p>
-          <p className="mt-2 text-4xl font-light text-[#7c735f] line-through">
-            ${product.msrp}
+          <p className="mt-2 text-4xl font-light text-[#7c735f]">
+            {product.rating}
           </p>
         </div>
       </div>

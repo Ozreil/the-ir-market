@@ -17,11 +17,6 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "theirmarkets.com",
       },
-      {
-        protocol: "http",
-        hostname: "local.theirmarkets.com",
-        port: "9090",
-      },
     ],
   },
   turbopack: {

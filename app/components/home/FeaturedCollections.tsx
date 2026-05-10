@@ -34,15 +34,18 @@ export function FeaturedCollections({
                   index % 2 ? "xl:mt-16" : ""
                 }`}
               >
-                <div className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                      style={{
-                        backgroundImage: `url("https://theirmarkets.com/categories/images/${category.id}.jpeg")`,
-                      }} />
-                <div className="absolute inset-x-0 bottom-0 p-6 text-white">
-                  <h3 className="mt-4 font-serif text-3xl leading-none">
+                <div
+                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                  style={{
+                    backgroundImage: `url("https://theirmarkets.com/categories/images/${category.id}.jpeg")`,
+                  }}
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(18,18,18,0.08),rgba(18,18,18,0.42)_45%,rgba(18,18,18,0.88))]" />
+                <div className="absolute inset-x-0 bottom-0 bg-[#121212]/72 p-6 text-white backdrop-blur-[2px]">
+                  <h3 className="mt-4 font-serif text-3xl leading-none drop-shadow-[0_2px_10px_rgba(0,0,0,0.65)]">
                     {category.title}
                   </h3>
-                  <p className="mt-4 text-sm leading-6 text-white/68">
+                  <p className="mt-4 text-sm leading-6 text-white/82 drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]">
                     {category.description}
                   </p>
                 </div>

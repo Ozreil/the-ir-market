@@ -31,6 +31,7 @@ export async function TopNavBar({
               width={398}
               height={419}
               priority={isDark}
+              unoptimized
               className="h-10 w-10 shrink-0 rounded-full border border-gold/30 object-cover p-1 sm:h-11 sm:w-11"
             />
           </Link>

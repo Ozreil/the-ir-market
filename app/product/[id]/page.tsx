@@ -25,6 +25,8 @@ export async function generateMetadata({
   const { id } = await params;
   const apiProductData = await getApiProductData(id);
   const product = apiProductData?.product;
+  const rawProduct = apiProductData?.rawProduct;
+  const seo = rawProduct?.seo_metadata;
 
   if (!product) {
     return {
@@ -32,7 +34,19 @@ export async function generateMetadata({
     };
   }
 
-  const description = truncate(product.summary, 156);
+  const title = seo?.meta_title ?? product.name;
+  const description = truncate(
+    seo?.meta_description ?? product.summary ?? rawProduct?.description ?? "",
+    156,
+  );
+  const ogTitle = seo?.og_title ?? title;
+  const ogDescription = truncate(seo?.og_description ?? description, 200);
+  const keywords = [
+    seo?.primary_keyword,
+    ...(seo?.keywords ?? []),
+    product.category,
+    product.brand,
+  ].filter((keyword): keyword is string => Boolean(keyword));
   const productUrl = absoluteUrl(`/product/${id}`);
   const imageUrl = product.image
     ? product.image.startsWith("http")
@@ -41,13 +55,14 @@ export async function generateMetadata({
     : absoluteUrl("/full-logo.jpeg");
 
   return {
-    title: product.name,
+    title,
     description,
     alternates: {
       canonical: `/product/${id}`,
     },
+    keywords,
     openGraph: {
-      description,
+      description: ogDescription,
       images: [
         {
           alt: product.name,
@@ -55,15 +70,15 @@ export async function generateMetadata({
         },
       ],
       siteName,
-      title: product.name,
+      title: ogTitle,
       type: "website",
       url: productUrl,
     },
     twitter: {
       card: "summary_large_image",
-      description,
+      description: ogDescription,
       images: [imageUrl],
-      title: product.name,
+      title: ogTitle,
     },
   };
 }
@@ -117,6 +132,7 @@ async function getApiProductData(id: string) {
     return {
       neighbors: result.neighbors.map(productDtoToDisplayProduct),
       product: productDtoToDisplayProduct(result.product),
+      rawProduct: result.product,
     };
   } catch {
     try {
@@ -125,6 +141,7 @@ async function getApiProductData(id: string) {
       return {
         neighbors: [] as ReturnType<typeof productDtoToDisplayProduct>[],
         product: productDtoToDisplayProduct(product as ProductDto),
+        rawProduct: product as ProductDto,
       };
     } catch {
       return null;

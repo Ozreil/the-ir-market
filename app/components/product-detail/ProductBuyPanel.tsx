@@ -1,5 +1,6 @@
 import { AmazonProductTitle } from "../AmazonProductTitle";
 import { RatingStars } from "../RatingStars";
+import { CopyAffiliateLinkButton } from "./CopyAffiliateLinkButton";
 import { amazonLinkAttributes } from "../../data/affiliate";
 import type { Product } from "../../lib/product-display";
 
@@ -39,12 +40,7 @@ export function ProductBuyPanel({ product }: { product: Product }) {
         >
           Buy on Amazon
         </a>
-        <a
-          href="mailto:concierge@theirmarket.example"
-          className="inline-flex min-h-14 items-center justify-center border border-[#121212] px-6 text-xs font-bold uppercase tracking-[0.18em] transition hover:border-gold hover:text-[#8f741f]"
-        >
-          Request Concierge Assistance
-        </a>
+        <CopyAffiliateLinkButton url={product.amazonUrl} />
       </div>
 
       <div className="mt-10">

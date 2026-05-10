@@ -17,13 +17,13 @@ export type ProductSearchRequest = {
 export type CategoryDto = {
   id: number;
   title: string;
-  description: string;
+  description: string | null;
 };
 
 export type CompanyDto = {
   id: number;
   title: string;
-  description: string;
+  description: string | null;
 };
 
 export type SortObject = {
@@ -43,10 +43,12 @@ export type PageableObject = {
 
 export type ProductDto = {
   id: number;
-  category: CategoryDto;
-  company: CompanyDto;
+  category?: CategoryDto;
+  category_id?: number;
+  company?: CompanyDto;
+  company_id?: number;
   title: string;
-  description: string;
+  description: string | null;
   affiliate_link: string;
   product_link: string;
   slug: string;
@@ -54,12 +56,28 @@ export type ProductDto = {
   number_of_reviews: number;
   info_date: string;
   price: number;
+  commission?: number;
+  created_at?: string;
+  deleted?: boolean;
+  photos?: string[];
   product_images?: ProductImageDto[];
+  seo_metadata?: ProductSeoMetadataDto;
+  short_description?: string | null;
+  updated_at?: string;
 };
 
 export type ProductImageDto = {
   id: number;
   url: string;
+};
+
+export type ProductSeoMetadataDto = {
+  meta_title?: string;
+  meta_description?: string;
+  og_title?: string;
+  og_description?: string;
+  primary_keyword?: string;
+  keywords?: string[];
 };
 
 export type PageProductDto = {
@@ -123,7 +141,7 @@ export async function searchProducts(
       console.log("[searchProducts] success", {
         endpoint: endpoint,
         request: compactParams(searchRequest),
-        result: response.data,
+        result: JSON.stringify(response.data),
       });
     }
 
@@ -157,15 +175,27 @@ export async function getProductsByCompanyAndCategory(
 }
 
 export async function getProductById(id: number, config?: AxiosRequestConfig) {
+  try {
+    const response = await apiClient.get<ProductDto>(`/products/${id}`, config);
 
-  try{
- const response = await apiClient.get<ProductDto>(`/products/${id}`, config);
+    if (process.env.NODE_ENV === "development") {
+      console.log("[getProductById] success", {
+        id,
+        result: response.data,
+      });
+    }
 
-  return response.data;
-  } catch(error) {
-      console.log("[product by Id error]", 
-        JSON.stringify(error)
-      )
+    return response.data;
+  } catch (error) {
+    if (process.env.NODE_ENV === "development") {
+      console.error("[getProductById] failed", {
+        id,
+        status: axios.isAxiosError(error) ? error.response?.status : undefined,
+        message: error instanceof Error ? error.message : String(error),
+      });
+    }
+
+    throw error;
   }
 }
 

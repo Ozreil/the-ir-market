@@ -32,6 +32,8 @@ export function ProductGallery({ product }: { product: Product }) {
                 src={image}
                 alt={`${product.name} detail ${index + 1}`}
                 fill
+                priority
+                unoptimized
                 sizes="(min-width: 1024px) 16vw, 33vw"
                 className="object-cover"
               />

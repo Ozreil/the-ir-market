@@ -28,6 +28,11 @@ const notoSerif = Noto_Serif({
   weight: ["400", "500", "600", "700"],
 });
 
+const impactSiteVerificationMeta = {
+  name: "impact-site-verification",
+  value: "e8e4968e-dc34-49de-804d-382fe408b89f",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   applicationName: siteName,
@@ -105,6 +110,9 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       className={`${geistSans.variable} ${geistMono.variable} ${notoSerif.variable} h-full antialiased`}
     >
+      <head>
+        <meta {...impactSiteVerificationMeta} />
+      </head>
       <body className="min-h-full flex flex-col">
         <JsonLd data={organizationJsonLd()} />
         <JsonLd data={websiteJsonLd()} />

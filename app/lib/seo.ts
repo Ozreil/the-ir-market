@@ -18,7 +18,7 @@ export function absoluteUrl(path: string) {
 }
 
 export function productJsonLd(product: Product) {
-  return {
+  const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     brand: {
@@ -39,6 +39,37 @@ export function productJsonLd(product: Product) {
       url: product.amazonUrl,
     },
   };
+
+  if (product.rating > 0 && product.reviewCount > 0) {
+    return {
+      ...jsonLd,
+      aggregateRating: {
+        "@type": "AggregateRating",
+        bestRating: 5,
+        ratingCount: product.reviewCount,
+        ratingValue: product.rating,
+        reviewCount: product.reviewCount,
+        worstRating: 1,
+      },
+      review: {
+        "@type": "Review",
+        author: {
+          "@type": "Organization",
+          name: siteName,
+        },
+        name: `Their Markets review of ${product.name}`,
+        reviewBody: product.curatorTake || product.summary,
+        reviewRating: {
+          "@type": "Rating",
+          bestRating: 5,
+          ratingValue: product.rating,
+          worstRating: 1,
+        },
+      },
+    };
+  }
+
+  return jsonLd;
 }
 
 export function organizationJsonLd() {

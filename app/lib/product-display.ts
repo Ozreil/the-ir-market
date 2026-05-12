@@ -8,6 +8,7 @@ export type Product = {
   collection: string;
   price: number;
   rating: number;
+  reviewCount: number;
   image?: string;
   gallery: string[];
   material: string;
@@ -42,6 +43,7 @@ export function productDtoToDisplayProduct(product: ProductDto): Product {
     collection: slugify(categoryTitle),
     price: product.price,
     rating: Number(product.rating ?? 0),
+    reviewCount: Number(product.number_of_reviews ?? 0),
     image: apiImages?.[0],
     gallery: apiImages ?? [],
     material: categoryDescription,

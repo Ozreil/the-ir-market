@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Noto_Serif } from "next/font/google";
+import Script from "next/script";
 import { JsonLd } from "./components/JsonLd";
 import "./globals.css";
 import {
@@ -117,6 +118,11 @@ export default function RootLayout({
         <JsonLd data={organizationJsonLd()} />
         <JsonLd data={websiteJsonLd()} />
         {children}
+        <Script
+          src="https://s.skimresources.com/js/302950X1790976.skimlinks.js"
+          strategy="afterInteractive"
+          type="text/javascript"
+        />
       </body>
     </html>
   );

@@ -10,13 +10,13 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Curated Product Index",
   description:
-    "Search and filter premium Amazon affiliate products by category, price, brand, rating, and reviews.",
+    "Search and filter premium affiliate products from partner companies by category, price, brand, rating, and reviews.",
   alternates: {
     canonical: "/category",
   },
   openGraph: {
     description:
-      "Search and filter premium Amazon affiliate products by category, price, brand, rating, and reviews.",
+      "Search and filter premium affiliate products from partner companies by category, price, brand, rating, and reviews.",
     images: [
       {
         alt: "Their Markets product index",
@@ -72,7 +72,7 @@ export default async function CategoryPage({
             <p className="max-w-xl text-lg leading-8 text-[#5c574e]">
               Filter the luxury edit by collection, brand, price, and rating.
               Each recommendation is built to move cleanly from editorial
-              discovery to Amazon purchase.
+              discovery to a partner company purchase.
             </p>
           </div>
           <div className="mt-10">

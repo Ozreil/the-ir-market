@@ -10,8 +10,8 @@ export function RegistryCta() {
             New affiliate finds, edited down.
           </h2>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-white/66">
-            Get the next round of Amazon picks and future merchant drops without
-            the usual shopping noise.
+            Get the next round of affiliate partner picks and merchant drops
+            without the usual shopping noise.
           </p>
         </div>
         <form className="grid gap-3 sm:grid-cols-[1fr_auto]">

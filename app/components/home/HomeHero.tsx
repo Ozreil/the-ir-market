@@ -25,9 +25,9 @@ export function HomeHero() {
             Their Markets
           </h1>
           <p className="mt-7 max-w-2xl text-xl font-light leading-9 text-white/76">
-            A curated collection of practical Amazon finds, home upgrades,
-            travel essentials, and smart everyday tools. No clutter. No hype.
-            Just products worth discovering.
+            A curated collection of practical finds from trusted affiliate
+            partners, home upgrades, travel essentials, and smart everyday
+            tools. No clutter. No hype. Just products worth discovering.
           </p>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
             <Link
@@ -49,7 +49,7 @@ export function HomeHero() {
                 Source
               </dt>
               <dd className="mt-2 font-serif text-xl text-white sm:text-2xl">
-                Amazon
+                Partner companies
               </dd>
             </div>
             <div>
@@ -65,7 +65,7 @@ export function HomeHero() {
                 Next
               </dt>
               <dd className="mt-2 font-serif text-xl text-white sm:text-2xl">
-                More stores
+                More partners
               </dd>
             </div>
           </dl>

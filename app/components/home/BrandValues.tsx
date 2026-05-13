@@ -1,7 +1,7 @@
 const values = [
   {
     title: "Clear affiliate sourcing",
-    text: "Every product links to the merchant clearly, with Amazon as the current source and room for more partners later.",
+    text: "Every product links clearly to its partner company, with room for more affiliate relationships as the market grows.",
   },
   {
     title: "Useful before beautiful",

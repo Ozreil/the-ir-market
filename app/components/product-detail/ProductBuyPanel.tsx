@@ -38,7 +38,7 @@ export function ProductBuyPanel({ product }: { product: Product }) {
           {...amazonLinkAttributes}
           className="inline-flex min-h-14 items-center justify-center bg-gold px-6 text-xs font-bold uppercase tracking-[0.22em] text-[#121212] transition hover:bg-[#121212] hover:text-white"
         >
-          Buy on Amazon
+          Buy on {product.brand}
         </a>
         <CopyAffiliateLinkButton url={product.amazonUrl} />
       </div>

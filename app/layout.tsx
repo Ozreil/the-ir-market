@@ -51,9 +51,9 @@ export const metadata: Metadata = {
   },
   category: "shopping",
   keywords: [
-    "Amazon affiliate",
+    "affiliate shopping",
     "affiliate shopping market",
-    "Amazon product recommendations",
+    "partner company product recommendations",
     "curated products",
     "trusted product picks",
     "premium shopping",

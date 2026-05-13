@@ -6,10 +6,10 @@ export const siteUrl =
 export const siteName = "Their Markets";
 
 export const defaultDescription =
-  "Their Markets is a curated affiliate shopping market for Amazon products, trusted picks, home essentials, electronics, kitchen finds, and gift ideas.";
+  "Their Markets is a curated affiliate shopping market for products from trusted partner companies, home essentials, electronics, kitchen finds, and gift ideas.";
 
 export const homeTitle =
-  "Their Markets | Curated Amazon Affiliate Shopping Market";
+  "Their Markets | Curated Affiliate Shopping From Partner Companies";
 
 export function absoluteUrl(path: string) {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;

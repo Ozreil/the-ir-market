@@ -15,7 +15,7 @@ export function Footer() {
             />
           </Link> */}
           <p className="mt-5 max-w-md text-sm leading-7 text-white/58">
-            Editorial Amazon affiliate curation for people who prefer the best
+            Editorial affiliate curation for people who prefer the best
             version of fewer things.
           </p>
         </div>
@@ -40,9 +40,9 @@ export function Footer() {
             Legal
           </h2>
           <p className="mt-5 text-sm leading-7 text-white/64">
-            Their Market Luxury participates in the Amazon Associates Program.
-            As an Amazon Associate, we may earn from qualifying purchases. Prices
-            and availability may change after publication.
+            Their Market Luxury may earn a commission from qualifying purchases
+            made through affiliate partner links. Prices and availability may
+            change after publication.
           </p>
         </div>
       </div>
